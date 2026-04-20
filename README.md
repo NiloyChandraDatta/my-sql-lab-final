@@ -333,3 +333,45 @@ SELECT * FROM Lab_Grades WHERE Name LIKE '%a%a%';
 ```sql
 SELECT * FROM Lab_Grades WHERE Name LIKE 'a___';
 ```
+
+
+-- a. Rename the column title in Albums table to album_title.
+ALTER TABLE Albums
+RENAME COLUMN title TO album_title;
+
+-- b. List the title of the album(s) where the title contains at least one 'o' or 'O'.
+SELECT album_title 
+FROM Albums 
+WHERE album_title LIKE '%o%' OR album_title LIKE '%O%';
+
+-- c. Update the album title '25' to 'Twenty-Five' for the correct album_id.
+UPDATE Albums 
+SET album_title = 'Twenty-Five' 
+WHERE album_title = '25';
+
+-- d. List all albums sorted by their album_id in descending order.
+SELECT * FROM Albums 
+ORDER BY album_id DESC;
+
+-- e. Find how many albums each artist has released.
+SELECT Artists.name AS artist_name, COUNT(Albums.album_id) AS total_albums 
+FROM Albums 
+JOIN Artists ON Albums.artist_id = Artists.artist_id
+GROUP BY Artists.name;
+
+-- f. Retrieve all album titles along with their corresponding artist names.
+SELECT Albums.album_title, Artists.name AS artist_name
+FROM Albums
+JOIN Artists ON Albums.artist_id = Artists.artist_id;
+
+-- g. Find all albums released under the label 'Atlantic'.
+SELECT Albums.album_title, Albums.album_id
+FROM Albums
+JOIN Labels ON Albums.label_id = Labels.label_id
+WHERE Labels.name = 'Atlantic';
+
+-- h. Find the number of albums under each label.
+SELECT Labels.name AS label_name, COUNT(Albums.album_id) AS total_albums 
+FROM Albums 
+JOIN Labels ON Albums.label_id = Labels.label_id
+GROUP BY Labels.name;
